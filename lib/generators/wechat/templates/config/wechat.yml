@@ -10,6 +10,7 @@ default: &default
   encrypt_mode: false # if true must fill encoding_aes_key
   encoding_aes_key:  "my_encoding_aes_key"
   jsapi_ticket: "C:/Users/[user_name]/wechat_jsapi_ticket"
+# proxy: http://username:password@proxy-server.mycorp.com:3128
 
 production:
   corpid:     <%%= ENV['WECHAT_CORPID'] %>

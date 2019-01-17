@@ -232,6 +232,22 @@ trusted_domain_fullname | 字串 |
 
 Wechat服务器有报道曾出现[RestClient::SSLCertificateNotVerified](http://qydev.weixin.qq.com/qa/index.php?qa=11037)错误，此时可以选择关闭SSL验证。`skip_verify_ssl: true`
 
+##### HTTP 代理设置
+
+如果需要使用http(s)代理，请设置以下参数。
+
+```
+default: &default
+  proxy: http://username:password@proxy-server.mycorp.com:3128
+```
+你可以去掉'username:password@'如果代理服务器不需要他们。
+
+另一种方法是设置环境变量`http_proxy`。比如：在Linux(Bash)里可以象这样设置，
+
+```
+export http_proxy=http://username:password@proxy-server.mycorp.com:3128
+```
+
 #### 为每个Responder配置不同的appid和secret
 
 有些情况下，单个Rails应用可能需要处理来自多个微信公众号的消息，您可以通过在`wechat_responder`和`wechat_api`后配置多个相关参数来支持多账号。

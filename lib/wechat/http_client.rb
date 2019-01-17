@@ -6,7 +6,7 @@ module Wechat
 
     def initialize(base, timeout, skip_verify_ssl)
       @base = base
-      @httprb = HTTP.timeout(:global, write: timeout, connect: timeout, read: timeout)
+      set_httprb(timeout: timeout)
       @ssl_context = OpenSSL::SSL::SSLContext.new
       @ssl_context.ssl_version = :TLSv1
       @ssl_context.verify_mode = OpenSSL::SSL::VERIFY_NONE if skip_verify_ssl
@@ -105,6 +105,22 @@ module Wechat
       end
 
       yield(parse_as, data)
+    end
+
+    def set_httprb(**opt)
+      @httprb = set_timeout(opt)
+      set_proxy
+    end
+
+    def set_timeout(**opt)
+      HTTP.timeout(:global, write: opt[:timeout], connect: opt[:timeout],
+                   read: opt[:timeout])
+    end
+
+    def set_proxy
+      return if Wechat.config.proxy.blank?
+      proxy = HTTP::URI.parse(Wechat.config.proxy)
+      @httprb = @httprb.via(proxy.host, proxy.port, proxy.user, proxy.password)
     end
   end
 end

@@ -258,6 +258,23 @@ Stability varies for Tencent wechat server, so setting a long timeout may be nee
 
 SSL Certification can also be corrupted for some reason in China, [it's reported](http://qydev.weixin.qq.com/qa/index.php?qa=11037) and if it happens to you, you can set `skip_verify_ssl: true`. (not recommend)
 
+##### HTTP proxy setting
+
+If http(s) proxy is required, please set below options.
+
+```
+default: &default
+  proxy: http://username:password@proxy-server.mycorp.com:3128
+```
+You can remove the 'username:password@' if the proxy server does not need them.
+
+Alternatively, the environment variable `http_proxy` value is also respected.
+For instance, you may set it on Linux(Bash) like this,
+
+```
+export http_proxy=http://username:password@proxy-server.mycorp.com:3128
+```
+
 #### Configure individual responder with different appid
 
 Sometimes, you may want to host more than one enterprise/public wechat account in one Rails application, so you can provide this configuration info when calling `wechat_responder` or `wechat_api`
